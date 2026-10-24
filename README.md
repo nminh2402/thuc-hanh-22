@@ -39,7 +39,8 @@ com.example.thuc_hanh_2
 │   └── FormatUtils           ← Định dạng tiền tệ VNĐ (đ) và số giờ làm việc
 ├── ui
 │   ├── auth
-│   │   └── LoginActivity     ← Đăng nhập, phân quyền Admin/Employee, nút đăng nhập nhanh 1-chạm
+│   │   ├── LoginActivity     ← Đăng nhập, phân quyền Admin/Employee, nút đăng nhập nhanh 1-chạm
+│   │   └── RegisterActivity  ← Đăng ký tài khoản nhân viên mới, lưu Account & Employee vào SQLite
 │   ├── admin
 │   │   ├── AdminMainActivity ← Dashboard quản trị: 3 Tab (Nhân viên, Chấm công, Tính lương)
 │   │   └── AddEditEmployeeActivity ← Form thêm mới & chỉnh sửa nhân sự, validate mã NV / username

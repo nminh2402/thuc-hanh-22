@@ -1,11 +1,15 @@
 package com.example.thuc_hanh_2.ui.auth;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.thuc_hanh_2.R;
@@ -22,8 +26,23 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText etUsername, etPassword;
     private CheckBox cbRememberMe;
     private Button btnLogin, btnQuickAdmin, btnQuickEmp;
+    private TextView tvGoToRegister;
     private DatabaseHelper dbHelper;
     private SessionManager sessionManager;
+
+    private final ActivityResultLauncher<Intent> registerLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                    String username = result.getData().getStringExtra(RegisterActivity.EXTRA_REGISTERED_USERNAME);
+                    if (username != null && !username.isEmpty()) {
+                        etUsername.setText(username);
+                        etPassword.setText("");
+                        etPassword.requestFocus();
+                    }
+                }
+            }
+    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +71,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         btnQuickAdmin = findViewById(R.id.btnQuickAdmin);
         btnQuickEmp = findViewById(R.id.btnQuickEmp);
+        tvGoToRegister = findViewById(R.id.tvGoToRegister);
 
         cbRememberMe.setChecked(true); // default true for better UX
     }
@@ -69,6 +89,11 @@ public class LoginActivity extends AppCompatActivity {
             etUsername.setText("nv01");
             etPassword.setText("123456");
             performLogin();
+        });
+
+        tvGoToRegister.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            registerLauncher.launch(intent);
         });
     }
 

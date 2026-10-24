@@ -505,6 +505,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return exists;
     }
 
+    public String getNextEmployeeCode() {
+        List<Employee> list = getAllEmployees();
+        int maxNum = 0;
+        for (Employee e : list) {
+            if (e.getCode() != null && e.getCode().toUpperCase().startsWith("NV")) {
+                try {
+                    int num = Integer.parseInt(e.getCode().substring(2).trim());
+                    if (num > maxNum) maxNum = num;
+                } catch (NumberFormatException ignored) {}
+            }
+        }
+        return String.format(Locale.getDefault(), "NV%03d", maxNum + 1);
+    }
+
     private Employee mapCursorToEmployee(Cursor cursor) {
         Employee emp = new Employee();
         emp.setId(cursor.getInt(cursor.getColumnIndexOrThrow(COL_ID)));
