@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Thuchanh2">
 
-        <!-- Launcher Entry Router -->
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -22,13 +22,13 @@
             </intent-filter>
         </activity>
 
-        <!-- Auth -->
+
         <activity
             android:name=".ui.auth.LoginActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
-        <!-- Admin -->
+
         <activity
             android:name=".ui.admin.AdminMainActivity"
             android:exported="false"
@@ -39,7 +39,7 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
-        <!-- Employee -->
+
         <activity
             android:name=".ui.employee.EmployeeMainActivity"
             android:exported="false"
