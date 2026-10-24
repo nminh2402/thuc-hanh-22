@@ -5,7 +5,7 @@
 ---
 
 ## Chạy demo
-1. Mở thư mục project bằng **Android Studio** (Ladybug trở lên) → đợi Gradle Sync hoàn tất.
+1. Mở thư mục project bằng **Android Studio**.
 2. Chạy cấu hình app trên máy ảo hoặc điện thoại thật (**Android 7.0+**, `minSdk 24`).
 3. Tài khoản có sẵn:
 
