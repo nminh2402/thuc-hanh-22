@@ -94,7 +94,7 @@ com.example.thuc_hanh_2
 
 ---
 
-## Phân công (3 người – 3 branch)
+## Phân công (2 người – 2 branch)
 
 Các branch được phân chia theo module và xếp chồng theo thứ tự phụ thuộc:
 - `main`: Branch gốc tích hợp sản phẩm hoàn chỉnh và bản phát hành.
