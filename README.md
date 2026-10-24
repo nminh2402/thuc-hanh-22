@@ -98,13 +98,13 @@ com.example.thuc_hanh_2
 
 Dự án được phân chia cân bằng theo 2 khối chức năng chính và quản lý qua Git branch:
 
-- **Thành viên 1 (Cơ sở dữ liệu, Xác thực & Phân hệ Quản trị viên)**:
+- **khanhnguyennnnnnnnnn (Cơ sở dữ liệu, Xác thực & Phân hệ Quản trị viên)**:
   - Branch: `feature/admin-management`
   - Thiết kế và triển khai CSDL SQLite (`DatabaseHelper`), khởi tạo 4 bảng dữ liệu, ràng buộc khóa ngoại và seed dữ liệu mẫu.
   - Quản lý phiên đăng nhập `SessionManager` (`SharedPreferences`), màn hình `LoginActivity` và điều hướng phân quyền.
   - Phân hệ Admin (`AdminMainActivity`, `AddEditEmployeeActivity`): Quản lý nhân viên (Thêm, Sửa, Xóa cascade, Tìm kiếm thời gian thực, `EmployeeAdapter`).
 
-- **Thành viên 2 (Nghiệp vụ Chấm công, Tính lương & Phân hệ Nhân viên)**:
+- **nminh2402 (Nghiệp vụ Chấm công, Tính lương & Phân hệ Nhân viên)**:
   - Branch: `feature/attendance-salary`
   - Phân hệ Nhân viên (`EmployeeMainActivity`): Giao diện điểm danh hôm nay, đồng hồ thời gian thực đếm giây (Live Clock), Lịch sử ca làm và Hồ sơ cá nhân.
   - Nghiệp vụ Chấm công: Ràng buộc dữ liệu (Validation), chống duplicate check-in, chặn giờ check-out không hợp lệ, xử lý ca lỗi (`INCOMPLETE`).
