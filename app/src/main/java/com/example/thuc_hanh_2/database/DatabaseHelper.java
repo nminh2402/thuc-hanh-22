@@ -170,21 +170,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         emp1.put(COL_EMP_ACCOUNT_ID, acc1Id);
         long emp1Id = db.insert(TABLE_EMPLOYEE, null, emp1);
 
-        // 3. Employee 2
-        ContentValues emp2Acc = new ContentValues();
-        emp2Acc.put(COL_ACC_USERNAME, "nv02");
-        emp2Acc.put(COL_ACC_PASSWORD, "123456");
-        emp2Acc.put(COL_ACC_ROLE, Account.ROLE_EMPLOYEE);
-        long acc2Id = db.insert(TABLE_ACCOUNT, null, emp2Acc);
-
-        ContentValues emp2 = new ContentValues();
-        emp2.put(COL_EMP_CODE, "NV002");
-        emp2.put(COL_EMP_FULLNAME, "Trần Thị Bình");
-        emp2.put(COL_EMP_EMAIL, "binh.tran@company.com");
-        emp2.put(COL_EMP_PHONE, "0912345678");
-        emp2.put(COL_EMP_HOURLY_RATE, 60000.0);
-        emp2.put(COL_EMP_ACCOUNT_ID, acc2Id);
-        long emp2Id = db.insert(TABLE_EMPLOYEE, null, emp2);
+      
+        
 
         // 4. Employee 3
         ContentValues emp3Acc = new ContentValues();
