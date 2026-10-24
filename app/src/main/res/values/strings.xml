@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Quản Lý Chấm Công &amp; Lương</string>
+    <string name="login_title">Đăng Nhập Hệ Thống</string>
+    <string name="login_sub">Hệ thống Quản lý Giờ làm việc &amp; Tính lương</string>
+    <string name="username">Tên đăng nhập</string>
+    <string name="password">Mật khẩu</string>
+    <string name="remember_me">Ghi nhớ đăng nhập</string>
+    <string name="btn_login">ĐĂNG NHẬP</string>
+    <string name="admin_portal">Bảng Điều Khiển Quản Trị Viên</string>
+    <string name="employee_portal">Cổng Thông Tin Nhân Viên</string>
+</resources>
