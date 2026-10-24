@@ -156,7 +156,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // 2. Employee 1
         ContentValues emp1Acc = new ContentValues();
-        emp1Acc.put(COL_ACC_USERNAME, "nv01");
+        emp1Acc.put(COL_ACC_USERNAME, "nv001");
         emp1Acc.put(COL_ACC_PASSWORD, "123456");
         emp1Acc.put(COL_ACC_ROLE, Account.ROLE_EMPLOYEE);
         long acc1Id = db.insert(TABLE_ACCOUNT, null, emp1Acc);
