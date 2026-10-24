@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private TextInputEditText etUsername, etPassword;
     private CheckBox cbRememberMe;
-    private Button btnLogin, btnQuickAdmin, btnQuickEmp;
+    private Button btnLogin, btnQuickAdmin;
     private TextView tvGoToRegister;
     private DatabaseHelper dbHelper;
     private SessionManager sessionManager;
@@ -70,7 +70,6 @@ public class LoginActivity extends AppCompatActivity {
         cbRememberMe = findViewById(R.id.cbRememberMe);
         btnLogin = findViewById(R.id.btnLogin);
         btnQuickAdmin = findViewById(R.id.btnQuickAdmin);
-        btnQuickEmp = findViewById(R.id.btnQuickEmp);
         tvGoToRegister = findViewById(R.id.tvGoToRegister);
 
         cbRememberMe.setChecked(true); // default true for better UX
@@ -82,12 +81,6 @@ public class LoginActivity extends AppCompatActivity {
         btnQuickAdmin.setOnClickListener(v -> {
             etUsername.setText("admin");
             etPassword.setText("admin123");
-            performLogin();
-        });
-
-        btnQuickEmp.setOnClickListener(v -> {
-            etUsername.setText("nv01");
-            etPassword.setText("123456");
             performLogin();
         });
 

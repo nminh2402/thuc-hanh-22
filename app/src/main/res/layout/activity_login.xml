@@ -155,43 +155,22 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tài khoản dùng thử nhanh:"
+                    android:text="Tài khoản Quản trị viên mẫu:"
                     android:textColor="@color/text_secondary"
                     android:textSize="12sp"
                     android:textStyle="bold" />
 
-                <LinearLayout
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnQuickAdmin"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnQuickAdmin"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="6dp"
-                        android:layout_weight="1"
-                        android:text="Admin (admin)"
-                        android:textColor="@color/primary"
-                        android:textSize="11sp"
-                        app:cornerRadius="8dp"
-                        app:strokeColor="@color/primary" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnQuickEmp"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:layout_weight="1"
-                        android:text="NV (nv01)"
-                        android:textColor="@color/secondary"
-                        android:textSize="11sp"
-                        app:cornerRadius="8dp"
-                        app:strokeColor="@color/secondary" />
-                </LinearLayout>
+                    android:layout_marginTop="8dp"
+                    android:text="Dùng nhanh tài khoản Admin (admin / admin123)"
+                    android:textColor="@color/primary"
+                    android:textSize="12sp"
+                    app:cornerRadius="8dp"
+                    app:strokeColor="@color/primary" />
 
                 <!-- Link to Register -->
                 <LinearLayout
