@@ -56,6 +56,16 @@
                     android:text="Vai trò: ADMIN | Toàn quyền quản trị"
                     android:textColor="#BFDBFE"
                     android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvAdminLiveClock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="--:--:--"
+                    android:textColor="#E0E7FF"
+                    android:textSize="12sp"
+                    android:fontFamily="monospace" />
             </LinearLayout>
 
             <ImageButton

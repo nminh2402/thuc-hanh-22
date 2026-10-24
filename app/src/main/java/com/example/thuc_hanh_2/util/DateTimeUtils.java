@@ -58,12 +58,53 @@ public class DateTimeUtils {
                     return -1.0; // Invalid, end before start
                 }
                 double hours = (double) diffMillis / (1000.0 * 60.0 * 60.0);
-                return Math.round(hours * 100.0) / 100.0; // round to 2 decimals
+                double rounded = Math.round(hours * 100.0) / 100.0; // round to 2 decimals
+                if (diffMillis > 1000 && rounded <= 0.0) {
+                    rounded = 0.01; // minimum 0.01 hour for quick test/demo shifts
+                }
+                return rounded;
             }
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return 0.0;
+    }
+
+    public static long getElapsedSeconds(String startTime) {
+        if (startTime == null || startTime.trim().isEmpty()) return 0;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat(TIME_FORMAT, Locale.getDefault());
+            String nowStr = sdf.format(new Date());
+            Date dStart = sdf.parse(startTime);
+            Date dNow = sdf.parse(nowStr);
+            if (dStart != null && dNow != null) {
+                long diff = (dNow.getTime() - dStart.getTime()) / 1000;
+                return Math.max(0, diff);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public static String formatDuration(long totalSeconds) {
+        long hours = totalSeconds / 3600;
+        long minutes = (totalSeconds % 3600) / 60;
+        long seconds = totalSeconds % 60;
+        return String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
+    }
+
+    public static String formatDurationDetailed(long totalSeconds) {
+        long hours = totalSeconds / 3600;
+        long minutes = (totalSeconds % 3600) / 60;
+        long seconds = totalSeconds % 60;
+        if (hours > 0) {
+            return String.format(Locale.getDefault(), "%d giờ %02d phút %02d giây", hours, minutes, seconds);
+        } else if (minutes > 0) {
+            return String.format(Locale.getDefault(), "%d phút %02d giây", minutes, seconds);
+        } else {
+            return String.format(Locale.getDefault(), "%d giây", seconds);
+        }
     }
 
     public static boolean isTimeAfter(String endTime, String startTime) {

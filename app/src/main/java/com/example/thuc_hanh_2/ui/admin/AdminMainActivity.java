@@ -45,8 +45,10 @@ public class AdminMainActivity extends AppCompatActivity {
     private DatabaseHelper dbHelper;
 
     // Header views
-    private TextView tvAdminGreeting, tvStatTotalEmployees, tvStatTodayLogs, tvStatCurrentMonth;
+    private TextView tvAdminGreeting, tvAdminLiveClock, tvStatTotalEmployees, tvStatTodayLogs, tvStatCurrentMonth;
     private ImageButton btnAdminLogout;
+    private android.os.Handler clockHandler;
+    private Runnable clockRunnable;
 
     // Tabs
     private TextView tabEmployees, tabAttendance, tabSalary;
@@ -113,6 +115,7 @@ public class AdminMainActivity extends AppCompatActivity {
 
     private void initViews() {
         tvAdminGreeting = findViewById(R.id.tvAdminGreeting);
+        tvAdminLiveClock = findViewById(R.id.tvAdminLiveClock);
         tvStatTotalEmployees = findViewById(R.id.tvStatTotalEmployees);
         tvStatTodayLogs = findViewById(R.id.tvStatTodayLogs);
         tvStatCurrentMonth = findViewById(R.id.tvStatCurrentMonth);
@@ -128,6 +131,23 @@ public class AdminMainActivity extends AppCompatActivity {
 
         tvAdminGreeting.setText("Xin chào, " + sessionManager.getUsername());
         tvStatCurrentMonth.setText("T" + selectedMonth + "/" + selectedYear);
+
+        startLiveClock();
+    }
+
+    private void startLiveClock() {
+        clockHandler = new android.os.Handler(android.os.Looper.getMainLooper());
+        clockRunnable = new Runnable() {
+            @Override
+            public void run() {
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("HH:mm:ss • dd/MM/yyyy", Locale.getDefault());
+                if (tvAdminLiveClock != null) {
+                    tvAdminLiveClock.setText("🕒 " + sdf.format(new java.util.Date()));
+                }
+                clockHandler.postDelayed(this, 1000);
+            }
+        };
+        clockHandler.post(clockRunnable);
     }
 
     private void setupTabs() {
@@ -437,5 +457,13 @@ public class AdminMainActivity extends AppCompatActivity {
         super.onResume();
         loadAllData();
         setupAttendanceEmployeeSpinner();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (clockHandler != null && clockRunnable != null) {
+            clockHandler.removeCallbacks(clockRunnable);
+        }
     }
 }

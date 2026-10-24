@@ -62,6 +62,7 @@ public class EmployeeMainActivity extends AppCompatActivity {
     private Button btnDoCheckIn, btnDoCheckOut;
     private Handler clockHandler;
     private Runnable clockRunnable;
+    private WorkLog activeTodayLog;
 
     // Tab 2: Attendance History
     private Spinner spinnerEmpHistMonth, spinnerEmpHistYear;
@@ -206,17 +207,40 @@ public class EmployeeMainActivity extends AppCompatActivity {
             public void run() {
                 SimpleDateFormat timeFmt = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
                 tvLiveClock.setText(timeFmt.format(new Date()));
+
+                // Live calculate working hours & estimated salary in real-time every second!
+                if (activeTodayLog != null && WorkLog.STATUS_CHECKED_IN.equalsIgnoreCase(activeTodayLog.getStatus())) {
+                    updateRealTimeWorkingUI();
+                }
+
                 clockHandler.postDelayed(this, 1000);
             }
         };
         clockHandler.post(clockRunnable);
     }
 
+    private void updateRealTimeWorkingUI() {
+        if (activeTodayLog != null && WorkLog.STATUS_CHECKED_IN.equalsIgnoreCase(activeTodayLog.getStatus())) {
+            long elapsedSeconds = DateTimeUtils.getElapsedSeconds(activeTodayLog.getCheckInTime());
+            String durationStr = DateTimeUtils.formatDuration(elapsedSeconds);
+            double elapsedHours = Math.round(((double) elapsedSeconds / 3600.0) * 100.0) / 100.0;
+            double earned = Math.round(elapsedHours * currentEmployee.getHourlyRate());
+
+            tvTodayStatusBadge.setText("Đang làm việc: " + durationStr);
+            tvTodayStatusBadge.setBackgroundResource(R.drawable.bg_badge_primary);
+            tvTodayStatusBadge.setTextColor(ContextCompat.getColor(this, R.color.primary));
+
+            tvTodayCheckInTime.setText(activeTodayLog.getCheckInTime());
+            tvTodayCheckOutTime.setText("Đang chạy (" + durationStr + ")");
+            tvTodayTotalHours.setText(durationStr + " (" + elapsedHours + " giờ) ~ " + FormatUtils.formatCurrency(earned));
+        }
+    }
+
     private void loadTodayAttendance() {
         String todayDate = DateTimeUtils.getTodayDate();
-        WorkLog latestLog = dbHelper.getTodayLatestWorkLog(currentEmployee.getId(), todayDate);
+        activeTodayLog = dbHelper.getTodayLatestWorkLog(currentEmployee.getId(), todayDate);
 
-        if (latestLog == null) {
+        if (activeTodayLog == null) {
             // Not checked in yet
             tvTodayStatusBadge.setText("Chưa điểm danh vào");
             tvTodayStatusBadge.setBackgroundResource(R.drawable.bg_badge_warning);
@@ -230,15 +254,9 @@ public class EmployeeMainActivity extends AppCompatActivity {
             btnDoCheckIn.setAlpha(1.0f);
             btnDoCheckOut.setEnabled(false);
             btnDoCheckOut.setAlpha(0.5f);
-        } else if (WorkLog.STATUS_CHECKED_IN.equalsIgnoreCase(latestLog.getStatus())) {
-            // Currently working
-            tvTodayStatusBadge.setText("Đang làm việc (Vào: " + latestLog.getCheckInTime() + ")");
-            tvTodayStatusBadge.setBackgroundResource(R.drawable.bg_badge_primary);
-            tvTodayStatusBadge.setTextColor(ContextCompat.getColor(this, R.color.primary));
-
-            tvTodayCheckInTime.setText(latestLog.getCheckInTime());
-            tvTodayCheckOutTime.setText("Đang làm việc...");
-            tvTodayTotalHours.setText("Đang tính...");
+        } else if (WorkLog.STATUS_CHECKED_IN.equalsIgnoreCase(activeTodayLog.getStatus())) {
+            // Currently working - show live elapsed duration
+            updateRealTimeWorkingUI();
 
             btnDoCheckIn.setEnabled(false);
             btnDoCheckIn.setAlpha(0.5f);
@@ -250,9 +268,9 @@ public class EmployeeMainActivity extends AppCompatActivity {
             tvTodayStatusBadge.setBackgroundResource(R.drawable.bg_badge_success);
             tvTodayStatusBadge.setTextColor(ContextCompat.getColor(this, R.color.success));
 
-            tvTodayCheckInTime.setText(latestLog.getCheckInTime());
-            tvTodayCheckOutTime.setText(latestLog.getCheckOutTime());
-            tvTodayTotalHours.setText(FormatUtils.formatHours(latestLog.getTotalHours()));
+            tvTodayCheckInTime.setText(activeTodayLog.getCheckInTime());
+            tvTodayCheckOutTime.setText(activeTodayLog.getCheckOutTime());
+            tvTodayTotalHours.setText(FormatUtils.formatHours(activeTodayLog.getTotalHours()));
 
             btnDoCheckIn.setEnabled(false);
             btnDoCheckIn.setAlpha(0.5f);
@@ -318,7 +336,20 @@ public class EmployeeMainActivity extends AppCompatActivity {
 
         int result = dbHelper.checkOut(currentEmployee.getId(), todayDate, currentTime);
         if (result > 0) {
-            Toast.makeText(this, "Điểm danh ra thành công! Tổng giờ: " + FormatUtils.formatHours(hours), Toast.LENGTH_LONG).show();
+            long elapsedSec = DateTimeUtils.getElapsedSeconds(activeLog.getCheckInTime());
+            String durationDetailed = DateTimeUtils.formatDurationDetailed(elapsedSec);
+            double earned = Math.round(hours * currentEmployee.getHourlyRate());
+
+            new AlertDialog.Builder(this)
+                    .setTitle("Hoàn thành ca làm việc")
+                    .setMessage("Điểm danh ra thành công!\n\n"
+                            + "• Giờ vào: " + activeLog.getCheckInTime() + "\n"
+                            + "• Giờ ra: " + currentTime + "\n"
+                            + "• Thời gian thực tế: " + durationDetailed + " (" + FormatUtils.formatHours(hours) + ")\n"
+                            + "• Tiền lương ca này: " + FormatUtils.formatCurrency(earned))
+                    .setPositiveButton("Đồng ý", null)
+                    .show();
+
             // Automatically update salary calculation for current month
             dbHelper.calculateAndSaveSalary(currentEmployee.getId(), selectedMonth, selectedYear);
             loadTodayAttendance();
