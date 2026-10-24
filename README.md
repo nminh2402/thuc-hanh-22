@@ -96,10 +96,20 @@ com.example.thuc_hanh_2
 
 ## Phân công (2 người – 2 branch)
 
-Các branch được phân chia theo module và xếp chồng theo thứ tự phụ thuộc:
-- `main`: Branch gốc tích hợp sản phẩm hoàn chỉnh và bản phát hành.
-- `feature/auth-database`: Khởi tạo SQLite `DatabaseHelper`, 4 bảng dữ liệu, Seeding dữ liệu mẫu, `SessionManager` (SharedPreferences), `LoginActivity` và điều hướng phân quyền.
-- `feature/employee-management`: Quản lý nhân viên phía Admin (Thêm, Sửa, Xóa cascade, Tìm kiếm thời gian thực, Form `AddEditEmployeeActivity`).
-- `feature/attendance-salary`: Nghiệp vụ chấm công Check-in/Check-out, Đồng hồ Live, Tự động tính giờ làm việc, Tính lương tháng & Overtime x1.5 cho cả Admin và Employee.
+Dự án được phân chia cân bằng theo 2 khối chức năng chính và quản lý qua Git branch:
 
-*Merge lần lượt vào `main` theo đúng thứ tự này (không xung đột).*
+- **Thành viên 1 (Cơ sở dữ liệu, Xác thực & Phân hệ Quản trị viên)**:
+  - Branch: `feature/admin-management`
+  - Thiết kế và triển khai CSDL SQLite (`DatabaseHelper`), khởi tạo 4 bảng dữ liệu, ràng buộc khóa ngoại và seed dữ liệu mẫu.
+  - Quản lý phiên đăng nhập `SessionManager` (`SharedPreferences`), màn hình `LoginActivity` và điều hướng phân quyền.
+  - Phân hệ Admin (`AdminMainActivity`, `AddEditEmployeeActivity`): Quản lý nhân viên (Thêm, Sửa, Xóa cascade, Tìm kiếm thời gian thực, `EmployeeAdapter`).
+
+- **Thành viên 2 (Nghiệp vụ Chấm công, Tính lương & Phân hệ Nhân viên)**:
+  - Branch: `feature/attendance-salary`
+  - Phân hệ Nhân viên (`EmployeeMainActivity`): Giao diện điểm danh hôm nay, đồng hồ thời gian thực đếm giây (Live Clock), Lịch sử ca làm và Hồ sơ cá nhân.
+  - Nghiệp vụ Chấm công: Ràng buộc dữ liệu (Validation), chống duplicate check-in, chặn giờ check-out không hợp lệ, xử lý ca lỗi (`INCOMPLETE`).
+  - Nghiệp vụ Tính giờ & Tính lương: Công thức tính giờ tự động, tách giờ làm thêm (OT x1.5), tính tổng lương tháng cho nhân viên và chức năng tính lương hàng loạt cho Admin (`SalaryAdapter`, `AttendanceAdapter`).
+
+**Quy trình hợp nhất Git (Branch Workflow):**
+- `main`: Nhánh chính chứa bản phát hành hoàn chỉnh.
+- Quy trình merge: `feature/admin-management` hoàn thiện khung nền tảng và merge trước vào `main`, sau đó `feature/attendance-salary` tích hợp nghiệp vụ và merge vào `main` (không xung đột).
