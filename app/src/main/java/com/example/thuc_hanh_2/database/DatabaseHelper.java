@@ -173,21 +173,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
       
         
 
-        // 4. Employee 3
-        ContentValues emp3Acc = new ContentValues();
-        emp3Acc.put(COL_ACC_USERNAME, "nv03");
-        emp3Acc.put(COL_ACC_PASSWORD, "123456");
-        emp3Acc.put(COL_ACC_ROLE, Account.ROLE_EMPLOYEE);
-        long acc3Id = db.insert(TABLE_ACCOUNT, null, emp3Acc);
-
-        ContentValues emp3 = new ContentValues();
-        emp3.put(COL_EMP_CODE, "NV003");
-        emp3.put(COL_EMP_FULLNAME, "Lê Hoàng Cường");
-        emp3.put(COL_EMP_EMAIL, "cuong.le@company.com");
-        emp3.put(COL_EMP_PHONE, "0987654321");
-        emp3.put(COL_EMP_HOURLY_RATE, 55000.0);
-        emp3.put(COL_EMP_ACCOUNT_ID, acc3Id);
-        long emp3Id = db.insert(TABLE_EMPLOYEE, null, emp3);
+       
 
         // Seed Sample Attendance (WorkLogs) for Current Month
         Calendar cal = Calendar.getInstance();
