@@ -11,7 +11,7 @@
 
 | Vai trò | Username | Password | Thông tin nhân viên & Mức lương |
 | :--- | :--- | :--- | :--- |
-| **Admin** | `admin` | `admin123` | Quản trị viên hệ thống (Toàn quyền) |
+| **Admin** | `admin` | `admin123` | Quản trị viên hệ thống (Toàn quyền) |.
 | **Employee** | `nv01` | `123456` | NV001 - Nguyễn Văn An (50.000 đ/giờ) |
 | **Employee** | `nv02` | `123456` | NV002 - Trần Thị Bình (60.000 đ/giờ) |
 | **Employee** | `nv03` | `123456` | NV003 - Lê Hoàng Cường (55.000 đ/giờ) |
